@@ -1,0 +1,415 @@
+.carousel-slide .hero-copy {
+  opacity: 1;
+  transition: opacity 0.4s cubic-bezier(.4,0,.2,1);
+}
+/* Removed overlay and double-fade logic for single-fade effect */
+:root{
+  --primary: #ff6600;   /* ORANGE THEME - edit in index.js CONTENT.theme.primaryColor if needed */
+  --bg: #ffffff;
+  --card: #fbfdff;
+  --text: #000000;
+  --muted: #6b6f77;
+  --container: 1100px;
+  --radius: 12px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+html,body{height:100%;margin:0;font-family:Inter,system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial;color:var(--text);background:var(--bg)}
+a{color:inherit}
+.container{max-width:var(--container);margin:0 auto;padding:24px}
+
+/* HEADER */
+.site-header{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--bg);border-bottom:1px solid rgba(2,6,12,0.06);backdrop-filter:blur(6px)}
+.site-header .header-inner{max-width:var(--container);margin:0 auto}
+.header-inner{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 16px 10px 6px}
+.site-header .header-inner{padding-left:6px;padding-right:12px}
+.site-header .header-inner{max-width:none;margin:0;padding:0;width:100%}
+.header-inner{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px}
+.site-header .header-inner{padding-left:8px;padding-right:8px}
+.brand{display:flex;align-items:center;gap:18px;margin-right:auto}
+.logo{width:120px;height:120px;border-radius:10px;object-fit:contain}
+.site-name{font-weight:700}
+.site-tagline{font-size:13px;color:var(--muted)}
+
+/* NAV */
+#main-nav-fix {}
+.main-nav{display:flex;align-items:center;gap:12px;position:relative}
+.nav-toggle{display:none;background:transparent;border:0;color:var(--muted);font-size:20px;padding:6px;border-radius:6px}
+#navList{list-style:none;display:flex;gap:18px;margin:0;padding:0;align-items:center;position:static;flex-direction:row;background:transparent;padding:0;border-radius:0;z-index:120}
+.brand{display:flex;align-items:center;gap:12px;margin-right:auto}
+.logo{width:120px;height:120px;border-radius:10px;object-fit:contain;margin-left:0}
+
+/* Hide the standalone header Give button so it only appears inside the nav list/hamburger */
+.give-btn, #giveBtn { display: none !important; }
+#navList a{color:var(--text);text-decoration:none;padding:8px 10px;border-radius:8px}
+#navList a:hover{background:rgba(255,255,255,0.03);color:var(--primary)}
+.give-btn{background:var(--primary);color:#071229;padding:8px 12px;border-radius:10px;font-weight:700}
+
+/* Nav give item: hidden on desktop, shown in mobile menu */
+.nav-give{display:block}
+.nav-give .give-link{background:var(--primary);color:#071229;padding:8px 12px;border-radius:8px;display:inline-block;font-weight:700}
+
+/* HERO */
+.hero{padding:0 0 0;position:relative;margin-top:0;scroll-margin-top:0;padding-top:0}
+.hero-carousel{position:relative;min-height:720px;overflow:hidden}
+.carousel-slide {
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  left: 0; right: 0; top: 0; bottom: 0;
+  transition: opacity 1s ease-in-out;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 720px;
+}
+.carousel-slide .slide-bg {
+  position: absolute;
+  left: 0; right: 0; top: 0; bottom: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* show more of the top of the photo to avoid important areas being cropped off */
+  object-position: center top;
+  z-index: 0;
+  filter: brightness(0.60) contrast(1.02) saturate(1.02);
+  transform: scale(0.98);
+  transition: transform 600ms ease, filter 400ms ease;
+}
+
+/* Special effect for third slide background */
+.carousel-slide:nth-child(3) .slide-bg {
+  filter: blur(2px) brightness(0.7) saturate(1.2);
+}
+/* Stronger darkening & positioning for the first slide to guarantee text readability */
+.carousel-slide.slide-first .slide-bg {
+  filter: brightness(0.48) contrast(1.05) saturate(1.05);
+  object-position: center 8%;
+  transform: scale(0.985);
+}
+.carousel-slide.slide-first .hero-inner {
+  padding-top: 140px;
+  padding-bottom: 80px;
+}
+.carousel-slide::before {
+  content: '';
+  position: absolute;
+  left: 0; right: 0; top: 0; bottom: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.96) 50%, rgba(0,0,0,1) 100%);
+  z-index: 1.5;
+  pointer-events: none;
+}
+
+/* No image masks present */
+.carousel-slide .hero-inner{position:relative;z-index:2}
+.carousel-slide.active {
+  opacity: 1;
+  pointer-events: auto;
+  z-index: 2;
+  position: relative;
+}
+.hero-btn-group {
+  opacity: 1;
+  pointer-events: auto;
+  z-index: 2;
+}
+.carousel-slide.active .hero-btn-group {
+  opacity: 1;
+  transform: translateY(0);
+}
+.hero-inner{display:grid;grid-template-columns:1fr;gap:22px;align-items:center;justify-content:center;text-align:center}
+.hero-copy h1{font-size:56px;margin:0 0 18px;line-height:1.2;font-weight:900;color:#fff;text-shadow:0 8px 20px rgba(0,0,0,0.7)}
+.hero-copy p{color:#fff;margin-bottom:28px;font-size:18px;line-height:1.6;font-weight:900;text-shadow:0 6px 18px rgba(0,0,0,0.65)}
+.scripture{font-size:16px;color:#fff;margin:16px 0 28px;line-height:1.6;font-style:italic;text-shadow:0 4px 14px rgba(0,0,0,0.55)}
+.btn{display:inline-block;padding:16px 38px;border-radius:12px;background:rgba(255,255,255,0.08);color:var(--text);text-decoration:none;font-size:22px;font-weight:800;cursor:pointer;border:none;box-shadow:0 2px 12px rgba(0,0,0,0.08);transition:background 0.2s}
+.btn-lg{font-size:22px;padding:14px 36px;font-weight:900;letter-spacing:0.5px}
+.btn-wide{min-width:170px;display:inline-flex;align-items:center;justify-content:center;}
+.arrow-icon{font-size:22px;font-weight:900;margin-left:10px;vertical-align:middle;transition:transform 0.2s;}
+.btn.secondary:hover .arrow-icon{transform:translateX(8px);}
+.btn.primary{background:var(--primary);color:#071229;font-weight:900;border:2px solid var(--primary)}
+.btn.secondary{background:rgba(255,255,255,0.18);backdrop-filter:blur(8px);color:var(--primary);font-weight:900;border:2px solid rgba(255,255,255,0.32)}
+.btn:hover{background:var(--primary);color:#fff;box-shadow:0 4px 18px rgba(255,102,0,0.18)}
+.hero-btn-group{display:flex;justify-content:center;gap:18px;margin-top:18px}
+.scroll-indicator {
+  display: flex;
+  justify-content: center;
+  margin-top: 32px;
+}
+.scroll-arrow {
+  font-size: 38px;
+  color: #fff;
+  opacity: 0.7;
+  animation: bounceArrow 1.2s infinite;
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+  letter-spacing: 0;
+}
+@keyframes bounceArrow {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(18px); opacity: 1; }
+}
+
+/* CAROUSEL CONTROLS */
+.carousel-controls{display:none;gap:8px;justify-content:center;position:absolute;bottom:16px;left:0;right:0;z-index:10;margin-top:0}
+.carousel-dot{width:12px;height:12px;border-radius:50%;background:rgba(255,255,255,0.3);border:none;cursor:pointer;transition:background 0.3s;box-shadow:0 2px 8px rgba(0,0,0,0.3)}
+.carousel-dot:hover{background:rgba(255,255,255,0.5)}
+.carousel-dot.active{background:var(--primary)}
+
+/* CARDS / GRID */
+.card{background: linear-gradient(180deg, #ffffff, #fbfdff);padding:14px;border-radius:12px;border:1px solid rgba(2,6,12,0.06)}
+.card-title{font-weight:700;margin-bottom:8px}
+.muted{color:var(--muted)}
+.small{font-size:13px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:14px}
+.grid .card{min-height:180px;padding:16px}
+
+/* WELCOME SECTION */
+.welcome-section {
+  padding: 64px 24px;
+  background: #ffffff;
+  color: #000000;
+  border-radius: 12px;
+  border: 1px solid rgba(2,6,12,0.06);
+  box-shadow: 0 12px 34px rgba(2,6,12,0.04);
+  /* pull the welcome section up slightly so the first slide image visually meets the welcome title */
+  margin-top: -80px;
+  position: relative;
+  z-index: 5;
+}
+.welcome-container {
+  max-width: var(--container);
+  margin: 0 auto;
+}
+.welcome-content {
+  text-align: center;
+}
+.welcome-cta-wrapper{display:flex;justify-content:center;margin-bottom:14px}
+.welcome-cta{padding:10px 18px;border-radius:999px;font-size:15px;font-weight:900;letter-spacing:0.6px}
+.welcome-section .welcome-cta{
+  background: rgba(0,0,0,0.9);
+  color: #ffffff;
+  border: 2px solid rgba(255,255,255,0.06);
+  box-shadow: 0 6px 18px rgba(2,6,12,0.06);
+  transition: background 160ms ease, color 160ms ease, transform 120ms ease;
+}
+.welcome-section .welcome-cta:hover,
+.welcome-section .welcome-cta:focus{
+  background: #ffffff;
+  color: #000000;
+  transform: translateY(-2px);
+}
+.welcome-title {
+  font-size: 48px;
+  font-weight: 900;
+  margin: 0 0 12px;
+  color: var(--primary);
+}
+
+/* make only the "Welcome to" prefix black inside the welcome title */
+.welcome-title .welcome-prefix {
+  color: #000000;
+  font-weight: 900;
+  display: inline-block;
+  margin-right: 8px;
+}
+.welcome-title .welcome-main {
+  color: var(--primary);
+  font-weight: 900;
+}
+.welcome-subtitle {
+  font-size: 18px;
+  color: rgba(0,0,0,0.65);
+  margin: 0 0 24px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.welcome-description {
+  font-size: 16px;
+  color: rgba(0,0,0,0.88);
+  font-weight:700;
+  margin: 0 0 48px;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.8;
+}
+.welcome-highlights {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+  margin-top: 32px;
+}
+.highlight-item {
+  padding: 22px;
+  border-radius: 12px;
+  background: #fbfdff;
+  border: 1px solid rgba(2,6,12,0.06);
+  transition: all 0.24s ease;
+}
+.highlight-item:hover {
+  background: #f1f7ff;
+  transform: translateY(-6px);
+}
+.highlight-icon {
+  font-size: 40px;
+  margin-bottom: 12px;
+  display: block;
+  color: var(--primary);
+}
+.highlight-item h3 {
+  font-size: 18px;
+  font-weight: 800;
+  margin: 12px 0;
+  color: rgba(0,0,0,0.9);
+}
+.highlight-item p {
+  font-size: 14px;
+  color: rgba(0,0,0,0.65);
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* Plan a Visit styles */
+.plan-visit{
+  padding:56px 24px;
+  background: #000000;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.03);
+  box-shadow: 0 12px 40px rgba(2,6,12,0.45);
+  color: #ffffff;
+}
+.plan-visit h2{font-size:34px;margin:0 0 8px;font-weight:900;color:#ffffff}
+.plan-visit .lead{color:rgba(255,255,255,0.75);font-size:17px;margin-bottom:18px}
+.plan-grid{display:grid;grid-template-columns:1fr 420px;gap:24px;align-items:start;margin-top:18px}
+.plan-visit .card{padding:22px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(0,0,0,0.12));border:1px solid rgba(255,255,255,0.06)}
+.plan-visit .card.alt{border-left:4px solid var(--primary);padding-left:18px;background:linear-gradient(180deg, rgba(0,0,0,0.06), rgba(0,0,0,0.10));}
+.plan-visit .card.alt p{font-family: Georgia, 'Times New Roman', Times, serif;font-size:16px;color:rgba(255,255,255,0.95);line-height:1.85;letter-spacing:0.2px}
+.plan-visit .lead.alt{font-family: Georgia, 'Times New Roman', Times, serif;font-style:italic;color:rgba(255,255,255,0.92);font-weight:600}
+.plan-visit .lead{color:rgba(255,255,255,0.95);font-size:18px;font-weight:700}
+.visit-list{margin:8px 0 14px;padding-left:18px}
+.visit-list li{margin-bottom:10px;line-height:1.6;color:rgba(255,255,255,0.95)}
+.plan-visit h3{color:#ffffff;margin-top:0}
+.plan-visit .card p{color:rgba(255,255,255,0.94);line-height:1.7}
+.visit-cta .btn{padding:12px 18px;border-radius:10px}
+.plan-location .map-container iframe{height:260px}
+.plan-visit .btn.primary{background:var(--primary);color:#071229;border-color:var(--primary);box-shadow:0 8px 28px rgba(255,102,0,0.14)}
+.plan-visit .btn.secondary{background:transparent;color:rgba(255,255,255,0.96);border:1px solid rgba(255,255,255,0.12)}
+.plan-times ul{list-style:none;padding:0;margin:8px 0 0}
+.plan-times li{margin-bottom:12px}
+.plan-times h3{font-size:16px;margin:0 0 6px;font-weight:800;color:#fff}
+.plan-times p{font-size:16px;color:rgba(255,255,255,0.96);line-height:1.6;margin:0}
+.plan-location p{color:rgba(255,255,255,0.96);margin:6px 0;font-size:15px;line-height:1.6}
+
+/* Ensure any small text under the map (links/notes) is white */
+.plan-visit .map-container + div, .plan-visit .map-container + div a, .plan-visit .map-container + div p { color: rgba(255,255,255,0.96); }
+.plan-location .btn{min-width:160px;padding:12px 18px;border-radius:10px}
+.map-container iframe{width:100%;height:280px;border:0;border-radius:10px;box-shadow:0 8px 30px rgba(2,6,12,0.45)}
+
+.plan-visit .btn.primary{background:var(--primary);color:#071229;border-color:var(--primary);box-shadow:0 6px 18px rgba(255,102,0,0.12)}
+.plan-visit .btn{color:rgba(255,255,255,0.96)}
+.plan-visit .btn.secondary{background:transparent;color:rgba(255,255,255,0.96);border:1px solid rgba(255,255,255,0.12)}
+
+@media (max-width:900px){
+  .plan-grid{grid-template-columns:1fr}
+  .map-container iframe{height:220px}
+}
+
+@media (max-width:900px){
+  .plan-grid{grid-template-columns:1fr;}
+}
+
+
+/* SERMON CARD (example) */
+.sermon-thumb{height:140px;border-radius:8px;background:linear-gradient(180deg, rgba(0,0,0,0.35), rgba(0,0,0,0.6));display:flex;align-items:flex-end;padding:12px;color:#fff;font-weight:700}
+
+/* ABOUT SECTION: make heading and text more prominent */
+#aboutHeading{
+  font-weight:800;
+  font-size:28px;
+  color:var(--text);
+  margin-bottom:8px;
+}
+#aboutText{
+  font-weight:700;
+  color:var(--text);
+  font-size:16px;
+  line-height:1.85;
+}
+
+/* Accent span used to color specific phrases (e.g., organization name) */
+.accent{ color: var(--primary); font-weight:800; }
+
+/* EVENTS */
+#eventsList .event{display:flex;gap:12px;align-items:flex-start;padding:12px;border-radius:10px;background:rgba(255,255,255,0.02);margin-bottom:12px}
+.event-date{min-width:88px;padding:8px;border-radius:8px;background:rgba(255,255,255,0.02);text-align:center}
+
+/* CONTACT */
+.contact-grid{display:grid;grid-template-columns:1fr 420px;gap:20px}
+
+/* FOOTER */
+.site-footer{border-top:1px solid rgba(255,255,255,0.03);padding:18px 0;color:var(--muted);text-align:center}
+
+/* RESPONSIVE */
+@media (max-width:1100px){
+  .grid{grid-template-columns:repeat(2,1fr)}
+  .contact-grid{grid-template-columns:1fr}
+  .hero-copy h1{font-size:48px}
+  .hero-copy p{font-size:17px}
+  .scroll-arrow{font-size:32px}
+  .welcome-highlights{grid-template-columns:repeat(2,1fr)}
+  .welcome-title{font-size:42px}
+  .welcome-description{font-size:15px;max-width:650px}
+  .carousel-slide.slide-first .hero-inner { padding-top: 100px }
+}
+@media (max-width:760px){
+  .nav-toggle{display:block;background:transparent;border:0;color:var(--muted);font-size:20px;padding:6px;border-radius:6px}
+  #navList{display:none;position:absolute;right:18px;top:66px;flex-direction:column;background:rgba(2,6,12,0.98);padding:12px;border-radius:10px}
+  /* Make mobile nav links visible against the dark mobile menu background */
+  #navList a{color:#ffffff;padding:10px;border-radius:8px}
+  #navList a:hover{background:rgba(255,255,255,0.06);color:var(--primary)}
+  #navList a:focus{outline:2px solid rgba(255,255,255,0.06);outline-offset:2px}
+  .grid{grid-template-columns:1fr}
+  .site-header .container{padding:12px}
+  .hero{padding:0}
+  .hero-carousel{min-height:450px}
+  .hero-copy h1{font-size:32px;line-height:1.2}
+  .hero-copy p{font-size:15px}
+  .btn{padding:10px 18px;font-size:14px}
+  .scroll-arrow{font-size:28px}
+  .welcome-section{padding:48px 24px}
+  .welcome-section{margin-top:-40px}
+  .carousel-slide.slide-first .hero-inner { padding-top: 60px }
+  .welcome-title{font-size:32px}
+  .welcome-subtitle{font-size:16px}
+  .welcome-description{font-size:14px;max-width:100%}
+  .welcome-highlights{grid-template-columns:1fr;gap:24px}
+  /* On small screens, hide header give button and show Give inside the mobile nav */
+  .give-btn{display:none}
+  .nav-give{display:block}
+  @keyframes bounceArrow {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(14px); opacity: 1; }
+  }
+}
+@media (max-width:480px){
+  .hero{padding:0}
+  .hero-carousel{min-height:350px}
+  .hero-copy h1{font-size:26px}
+  .hero-copy p{font-size:14px}
+  .btn{padding:8px 16px;font-size:13px}
+  .container{padding:18px}
+  .scroll-arrow{font-size:24px}
+  .welcome-section{padding:32px 18px}
+  .welcome-section{margin-top:-24px}
+  .carousel-slide.slide-first .hero-inner { padding-top: 40px }
+  .welcome-title{font-size:24px}
+  .welcome-subtitle{font-size:14px}
+  .welcome-highlights{grid-template-columns:1fr;gap:16px}
+  .highlight-item{padding:16px}
+  .highlight-icon{font-size:32px}
+  @keyframes bounceArrow {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(12px); opacity: 1; }
+  }
+}
