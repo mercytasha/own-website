@@ -27,20 +27,22 @@ a{color:inherit}
 .header-inner{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px}
 .site-header .header-inner{padding-left:8px;padding-right:8px}
 .brand{display:flex;align-items:center;gap:18px;margin-right:auto}
-.logo{width:120px;height:120px;border-radius:10px;object-fit:contain}
+.logo{width:180px;height:180px;border-radius:10px;object-fit:contain}
 .site-name{font-weight:700}
 .site-tagline{font-size:13px;color:var(--muted)}
 
 /* NAV */
-#main-nav-fix {}
+/* Navigation fixed positioning */
 .main-nav{display:flex;align-items:center;gap:12px;position:relative}
 .nav-toggle{display:none;background:transparent;border:0;color:var(--muted);font-size:20px;padding:6px;border-radius:6px}
 #navList{list-style:none;display:flex;gap:18px;margin:0;padding:0;align-items:center;position:static;flex-direction:row;background:transparent;padding:0;border-radius:0;z-index:120}
 .brand{display:flex;align-items:center;gap:12px;margin-right:auto}
-.logo{width:120px;height:120px;border-radius:10px;object-fit:contain;margin-left:0}
+.logo{width:150px;height:150px;border-radius:10px;object-fit:contain;margin-left:0}
 
-/* Hide the standalone header Give button so it only appears inside the nav list/hamburger */
+/* Hide the standalone header Give button */
 .give-btn, #giveBtn { display: none !important; }
+
+/* NAV */
 #navList a{color:var(--text);text-decoration:none;padding:8px 10px;border-radius:8px}
 #navList a:hover{background:rgba(255,255,255,0.03);color:var(--primary)}
 .give-btn{background:var(--primary);color:#071229;padding:8px 12px;border-radius:10px;font-weight:700}
@@ -80,7 +82,7 @@ a{color:inherit}
 
 /* Special effect for third slide background */
 .carousel-slide:nth-child(3) .slide-bg {
-  filter: blur(2px) brightness(0.7) saturate(1.2);
+  filter: brightness(0.7) saturate(1.2);
 }
 /* Stronger darkening & positioning for the first slide to guarantee text readability */
 .carousel-slide.slide-first .slide-bg {
@@ -130,6 +132,9 @@ a{color:inherit}
 .btn.primary{background:var(--primary);color:#071229;font-weight:900;border:2px solid var(--primary)}
 .btn.secondary{background:rgba(255,255,255,0.18);backdrop-filter:blur(8px);color:var(--primary);font-weight:900;border:2px solid rgba(255,255,255,0.32)}
 .btn:hover{background:var(--primary);color:#fff;box-shadow:0 4px 18px rgba(255,102,0,0.18)}
+.sermon-links{display:none;}
+.sermon-links a{display:block;width:100%;margin-bottom:8px;text-align:center;}
+.sermon-toggle{width:100%;}
 .hero-btn-group{display:flex;justify-content:center;gap:18px;margin-top:18px}
 .scroll-indicator {
   display: flex;
@@ -156,9 +161,36 @@ a{color:inherit}
 .carousel-dot.active{background:var(--primary)}
 
 /* CARDS / GRID */
-.card{background: linear-gradient(180deg, #ffffff, #fbfdff);padding:14px;border-radius:12px;border:1px solid rgba(2,6,12,0.06)}
+.card{background: linear-gradient(180deg, #ffffff, #fbfdff);padding:14px;border-radius:12px;border:1px solid rgba(2,6,12,0.06);color:#000}
 .card-title{font-weight:700;margin-bottom:8px}
 .muted{color:var(--muted)}
+
+.about-section{overflow:hidden;background:#252525;border-radius:14px;padding:48px;color:#fff}
+.about-content{display:grid;grid-template-columns:minmax(280px,0.9fr) minmax(0,1.1fr);gap:42px;align-items:center;margin-top:24px}
+.about-copy{min-width:0}
+.about-photo{position:relative;height:100%;min-height:360px;overflow:hidden;border-radius:10px;background:#171717}
+.about-photo img{width:100%;height:100%;min-height:360px;display:block;object-fit:cover}
+
+/* Dark-mode style for ministry cards (including Accelerate) */
+.ministry-card{background:#111; border:1px solid rgba(255,255,255,0.12); color:#fff}
+.ministry-card h3, .ministry-card p, .ministry-card .ministry-icon{color:#fff}
+.ministry-card .ministry-icon{background:none}
+
+.ministry-image{width:96px;height:96px;object-fit:cover;border-radius:12px;display:block;margin:0 auto 14px}
+.ministry-icon img{display:block;margin:0 auto}
+
+/* SETMAN SECTION */
+.setman-section{padding:46px 24px; border:1px solid rgba(2,6,12,0.08); border-radius:14px; background:#ffffff; margin-top:28px}
+.setman-overview{display:grid;grid-template-columns:1fr 340px;gap:24px;align-items:start; margin-bottom:24px}
+.setman-text h3{margin-top:18px;margin-bottom:10px;color:var(--primary)}
+.setman-photo{background: linear-gradient(180deg, #ffff, #fbfdff); border:1px solid rgba(2,6,12,0.06); border-radius:14px; padding:10px; text-align:center}
+.setman-photo img{width:100%;height:auto;border-radius:12px;object-fit:cover;display:block}
+.photo-caption{margin-top:8px;font-size:13px;color:var(--muted);font-weight:700}
+
+@media (max-width:900px){
+  .setman-overview{grid-template-columns:1fr}
+  .setman-photo{max-width:100%!important;margin:0 auto}
+}
 .small{font-size:13px}
 .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:14px}
 .grid .card{min-height:180px;padding:16px}
@@ -246,10 +278,18 @@ a{color:inherit}
   background: #fbfdff;
   border: 1px solid rgba(2,6,12,0.06);
   transition: all 0.24s ease;
+  overflow: hidden;
+}
+.highlight-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  display: block;
 }
 .highlight-item:hover {
-  background: #f1f7ff;
-  transform: translateY(-6px);
+  transform: none;
 }
 .highlight-icon {
   font-size: 40px;
@@ -265,7 +305,7 @@ a{color:inherit}
 }
 .highlight-item p {
   font-size: 14px;
-  color: rgba(0,0,0,0.65);
+  color: rgba(0,0,0,0.85);
   margin: 0;
   line-height: 1.6;
 }
@@ -301,6 +341,18 @@ a{color:inherit}
 .plan-times p{font-size:16px;color:rgba(255,255,255,0.96);line-height:1.6;margin:0}
 .plan-location p{color:rgba(255,255,255,0.96);margin:6px 0;font-size:15px;line-height:1.6}
 
+/* HEADER GIVE ACCOUNTS DROPDOWN */
+#giveAccountsHeader{background:#ffffff;border:1px solid rgba(2,6,12,0.1);border-radius:10px;padding:12px;box-shadow:0 8px 24px rgba(2,6,12,0.15);min-width:280px;margin-top:8px}
+#giveAccountsHeader .account-link{background:linear-gradient(135deg, rgba(255,102,0,0.08), rgba(255,102,0,0.04));border:1px solid rgba(255,102,0,0.15);color:var(--primary);padding:12px 14px;font-size:13px;margin-bottom:8px}
+#giveAccountsHeader .account-link:last-of-type{margin-bottom:0}
+#giveAccountsHeader .account-link:hover{background:linear-gradient(135deg, rgba(255,102,0,0.15), rgba(255,102,0,0.08));border-color:var(--primary);box-shadow:0 4px 12px rgba(255,102,0,0.1)}
+
+/* NAV GIVE ACCOUNTS DROPDOWN */
+#giveAccountsNav{background:#ffffff;border:1px solid rgba(2,6,12,0.1);border-radius:10px;padding:12px;box-shadow:0 8px 24px rgba(2,6,12,0.15);min-width:280px;max-width:300px;margin-top:8px;width: max-content;white-space: nowrap;}
+#giveAccountsNav .account-link{background:linear-gradient(135deg, rgba(255,102,0,0.08), rgba(255,102,0,0.04));border:1px solid rgba(255,102,0,0.15);color:var(--primary);padding:12px 14px;font-size:12px;margin-bottom:8px;display: block;text-decoration: none;border-radius: 6px;word-wrap: break-word;white-space: normal;line-height: 1.4;text-align: left;}
+#giveAccountsNav .account-link:last-of-type{margin-bottom:0}
+#giveAccountsNav .account-link:hover{background:linear-gradient(135deg, rgba(255,102,0,0.15), rgba(255,102,0,0.08));border-color:var(--primary);box-shadow:0 4px 12px rgba(255,102,0,0.1)}
+
 /* Ensure any small text under the map (links/notes) is white */
 .plan-visit .map-container + div, .plan-visit .map-container + div a, .plan-visit .map-container + div p { color: rgba(255,255,255,0.96); }
 .plan-location .btn{min-width:160px;padding:12px 18px;border-radius:10px}
@@ -321,34 +373,274 @@ a{color:inherit}
 
 
 /* SERMON CARD (example) */
+.sermon-group{position:relative;display:inline-block;margin-bottom:16px}
+.sermon-parent-link{background:transparent;border:0;padding:0;color:var(--primary);font-size:16px;font-weight:800;display:inline-flex;align-items:center;gap:8px;cursor:pointer}
+.sermon-arrow{font-size:18px;transition:transform 120ms ease}
+.sermon-parent-link:hover .sermon-arrow{transform:translateX(4px)}
+.sermon-group-links{display:none;position:absolute;top:calc(100% + 8px);left:0;min-width:280px;max-width:320px;background:#fff;border:1px solid rgba(2,6,12,0.08);border-radius:12px;padding:10px;box-shadow:0 10px 28px rgba(2,6,12,0.12);z-index:25}
+.sermon-group-links.show{display:flex;flex-direction:column;gap:8px}
+.sermon-group-links a{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;border-radius:10px;background:linear-gradient(135deg, rgba(255,102,0,0.08), rgba(255,102,0,0.03));color:var(--primary);text-decoration:none;font-weight:700;border:1px solid rgba(255,102,0,0.12)}
+.sermon-group-links a:hover{background:linear-gradient(135deg, rgba(255,102,0,0.14), rgba(255,102,0,0.06));}
+.sermon-link-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 0;border-top:1px solid rgba(2,6,12,0.06);color:var(--primary);font-weight:700;text-decoration:none}
+.sermon-link-row:first-of-type{border-top:0;padding-top:0}
+.sermon-year-tag{display:inline-block;width:max-content;padding:4px 8px;border-radius:999px;background:rgba(255,102,0,0.1);color:var(--primary);font-size:12px;font-weight:800;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.06em}
 .sermon-thumb{height:140px;border-radius:8px;background:linear-gradient(180deg, rgba(0,0,0,0.35), rgba(0,0,0,0.6));display:flex;align-items:flex-end;padding:12px;color:#fff;font-weight:700}
+.sermon-first-card .sermon-first-image{
+  object-position: center 20%;
+}
+
+/* MINISTRIES / PROGRAMS SECTION */
+#ministries {
+  background: #000;
+  color: #fff;
+  padding: 48px 24px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.35);
+}
+#ministries, #ministries * {
+  color: #fff !important;
+}
+
+/* Force About-Apostle area to black text */
+#about .about-apostle {
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+}
+#about .about-apostle, #about .about-apostle h3, #about .about-apostle p, #about .about-apostle strong {
+  color: #000 !important;
+  text-shadow: none !important;
+}
+
+#about .about-apostle h3 {
+  margin-top: 0;
+}
+
+.ministries-header {
+  text-align: center;
+  margin-bottom: 36px;
+}
+.ministries-header h2 {
+  font-size: 36px;
+  font-weight: 900;
+  margin-bottom: 12px;
+  color: #fff;
+}
+.ministries-header .lead {
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.75);
+  max-width: 600px;
+  margin: 0 auto;
+}
+.ministries-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 28px;
+}
+.ministry-card {
+  position: relative;
+  overflow: hidden;
+  background: #111;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 32px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  min-height: 280px;
+}
+.ministry-card .ministry-icon {
+  height: 150px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+.ministry-icon img {
+  max-height: 100%;
+  max-width: 100%;
+  object-fit: contain;
+}
+.ministry-icon-vod .ministry-logo-bold{width:195px;height:170px}
+.ministry-icon-lguy .ministry-logo-bold{width:100%;height:82px}
+.ministry-icon-accelerate .ministry-logo-bold{width:170px;height:150px}
+.ministry-card h3, .ministry-card p, .ministry-card .ministry-icon { color: #fff; }
+.ministry-card:hover { background: #111; border-color: rgba(255, 255, 255, 0.12); transform: none; box-shadow: none; }
+
+.ministry-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--primary), rgba(255, 102, 0, 0.6));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+.ministry-card:hover::before {
+  transform: scaleX(0);
+}
+.ministry-icon {
+  font-size: 48px;
+  line-height: 1;
+  margin-bottom: 16px;
+  display: block;
+  animation: float 3s ease-in-out infinite;
+}
+.ministry-card[data-icon="0"] .ministry-icon {
+  animation-delay: 0s;
+}
+.ministry-card[data-icon="1"] .ministry-icon {
+  animation-delay: 0.3s;
+}
+.ministry-card[data-icon="2"] .ministry-icon {
+  animation-delay: 0.6s;
+}
+.ministry-card[data-icon="3"] .ministry-icon {
+  animation-delay: 0.9s;
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+.ministry-card h3 {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--text);
+  margin: 0 0 12px 0;
+  line-height: 1.4;
+}
+.ministry-card p {
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.6;
+  margin: 0;
+}
 
 /* ABOUT SECTION: make heading and text more prominent */
 #aboutHeading{
   font-weight:800;
   font-size:28px;
-  color:var(--text);
+  color:#fff;
+  text-align:center;
   margin-bottom:8px;
+  text-shadow:0 2px 8px rgba(0,0,0,0.35);
 }
 #aboutText{
   font-weight:700;
-  color:var(--text);
+  max-width:700px;
+  color:#fff;
   font-size:16px;
   line-height:1.85;
+  text-shadow:0 1px 5px rgba(0,0,0,0.45);
+}
+
+@media (max-width:760px){
+  .about-section{padding:32px 24px}
+  .about-content{grid-template-columns:1fr;gap:24px}
+  .about-photo,.about-photo img{min-height:280px}
 }
 
 /* Accent span used to color specific phrases (e.g., organization name) */
 .accent{ color: var(--primary); font-weight:800; }
 
 /* EVENTS */
-#eventsList .event{display:flex;gap:12px;align-items:flex-start;padding:12px;border-radius:10px;background:rgba(255,255,255,0.02);margin-bottom:12px}
-.event-date{min-width:88px;padding:8px;border-radius:8px;background:rgba(255,255,255,0.02);text-align:center}
+#eventsList .event{display:flex;gap:16px;align-items:center;padding:16px;border-radius:12px;background:rgba(255,255,255,0.03);margin-bottom:16px;border:1px solid rgba(255,255,255,0.05);box-shadow:0 2px 8px rgba(0,0,0,0.1);transition:transform 0.2s ease, box-shadow 0.2s ease}
+#eventsList .event:hover{transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,0.15)}
+.event-date{min-width:100px;padding:10px;border-radius:10px;background:linear-gradient(135deg, var(--primary), rgba(255,102,0,0.8));color:#fff;text-align:center;font-weight:600;text-shadow:0 1px 2px rgba(0,0,0,0.3)}
+.event-date .muted{color:#fff !important;opacity:0.9}
+.event-content{flex:1}
+.event-title{font-size:18px;font-weight:700;color:var(--text);margin-bottom:4px}
+.event-desc{color:var(--muted);font-size:14px;line-height:1.4}
+
+.contact-footer-wrap {
+  background: #000;
+  color: #fff;
+  margin-top: 0;
+}
 
 /* CONTACT */
-.contact-grid{display:grid;grid-template-columns:1fr 420px;gap:20px}
+#contact{
+  background: transparent;
+  color: #fff;
+  padding: 40px 24px 20px;
+  border-radius: 0;
+  border: none;
+  box-shadow: none;
+}
+#contact h2,
+#contact p,
+#contact .muted,
+#contact label,
+#contact .contact-grid > div{
+  color: #fff;
+}
+.contact-grid{display:grid;grid-template-columns:1fr 420px;gap:20px;align-items:stretch}
+#contact .contact-grid > div{
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px;
+  padding: 18px;
+}
+
+/* CONTACT FORM */
+.contact-form{display:flex;flex-direction:column;gap:24px}
+.form-group{display:flex;flex-direction:column;gap:8px}
+.form-group label{font-weight:700;color:#fff;font-size:15px;margin-bottom:4px}
+.form-group input,
+.form-group textarea{
+  padding:12px 14px;
+  border:1px solid rgba(255,255,255,0.12);
+  border-radius:8px;
+  font-family:inherit;
+  font-size:15px;
+  color:#fff;
+  background:rgba(255,255,255,0.06);
+  transition:border-color 0.2s, box-shadow 0.2s;
+}
+.form-group input::placeholder,
+.form-group textarea::placeholder{
+  color:rgba(255,255,255,0.7);
+}
+.form-group input:focus,
+.form-group textarea:focus{
+  outline:none;
+  border-color:var(--primary);
+  box-shadow:0 0 0 3px rgba(255,102,0,0.16);
+}
+.message-group{
+  margin-top:8px;
+  margin-bottom:16px;
+}
+.message-group textarea{
+  resize:vertical;
+  min-height:140px;
+}
+.button-group{
+  display:flex;
+  justify-content:flex-start;
+  margin-top:16px;
+  padding-top:12px;
+  border-top:1px solid rgba(255,255,255,0.12);
+}
+.button-group .btn{
+  min-width:160px;
+}
 
 /* FOOTER */
-.site-footer{border-top:1px solid rgba(255,255,255,0.03);padding:18px 0;color:var(--muted);text-align:center}
+.site-footer{
+  background: transparent;
+  border-top:1px solid rgba(255,255,255,0.08);
+  padding:18px 0 0;
+  color:rgba(255,255,255,0.8);
+  text-align:center;
+}
 
 /* RESPONSIVE */
 @media (max-width:1100px){
@@ -412,4 +704,225 @@ a{color:inherit}
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(12px); opacity: 1; }
   }
+}
+
+/* Footer styles - Logic Church style */
+.site-footer{
+  padding:48px 0 0;
+  background:#000000;
+  color:#f6f8fb;
+  margin-top:0;
+  border-top:none;
+}
+.site-footer .container{
+  display:flex;
+  flex-direction:column;
+  max-width:var(--container);
+  margin:0 auto;
+}
+.footer-content{
+  display:flex;
+  gap:64px;
+  align-items:flex-start;
+  padding-bottom:48px;
+  border-bottom:1px solid rgba(255,255,255,0.1);
+}
+.footer-brand{
+  flex:0 0 auto;
+  display:flex;
+  gap:16px;
+  align-items:flex-start;
+  padding:0;
+}
+.footer-logo{
+  width:100px;
+  height:100px;
+  border-radius:8px;
+  object-fit:contain;
+  flex-shrink:0;
+  display:block;
+}
+.footer-brand h3{
+  margin:0;
+  padding:0;
+  font-size:16px;
+  color:#fff;
+  font-weight:500;
+  line-height:1.4;
+  max-width:120px;
+  text-align:left;
+}
+.footer-right{
+  flex:1;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:48px;
+}
+.footer-section h4{
+  margin:0 0 16px;
+  color:#fff;
+  font-size:15px;
+  font-weight:700;
+  text-align:center;
+}
+.footer-section ul{
+  list-style:none;
+  margin:0;
+  padding:0;
+}
+.footer-section li{
+  margin:10px 0;
+}
+.footer-section a{
+  color:rgba(255,255,255,0.8);
+  text-decoration:none;
+  font-size:14px;
+  transition:color 0.2s;
+}
+.footer-section a:hover{
+  color:orangered;
+}
+.footer-section p{
+  margin:8px 0;
+  font-size:14px;
+  color:rgba(255,255,255,0.85);
+}
+.social-links{
+  display:flex;
+  gap:16px;
+  align-items:center;
+}
+.social-links a{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:8px;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+  box-shadow: none;
+}
+.social-links a.tiktok-link{
+  background: orangered;
+  border-radius: 50%;
+  padding: 0;
+}
+.social-links a.tiktok-link .social-icon{
+  fill: #000;
+  width: 36px;
+  height: 36px;
+}
+.social-icon{
+  width:40px;
+  height:40px;
+  fill:orangered;
+  transition:fill 0.2s;
+}
+.social-links a:hover .social-icon{
+  fill:#ff8c00;
+}
+.social-links a:active .social-icon,
+.social-links a:focus .social-icon{
+  fill:orangered;
+}
+.social-links a:focus:hover .social-icon{
+  fill:orangered;
+}
+.social-links a.tiktok-link:active .social-icon,
+.social-links a.tiktok-link:focus .social-icon{
+  fill: #000;
+}
+.social-links a.tiktok-link:focus:hover .social-icon{
+  fill: #000;
+}
+.social-links a:active,
+.social-links a:focus{
+  outline:none;
+  background:none;
+}
+.social-links a.tiktok-link:active,
+.social-links a.tiktok-link:focus{
+  background: orangered;
+  outline: none;
+}
+.footer-bottom{
+  padding:24px 0;
+  text-align:center;
+}
+.footer-address{
+  margin-bottom:12px;
+}
+.footer-address p{
+  margin:0;
+  font-size:13px;
+  color:rgba(255,255,255,0.75);
+}
+.footer-copyright{
+  margin:0;
+  font-size:13px;
+  color:rgba(255,255,255,0.75);
+}
+@media (max-width:920px){
+  .footer-content{
+    flex-direction:column;
+    gap:32px;
+  }
+  .footer-right{
+    grid-template-columns:repeat(2,1fr);
+    gap:32px;
+  }
+}
+@media (max-width:600px){
+  .footer-right{
+    grid-template-columns:1fr;
+    gap:24px;
+  }
+  .footer-logo{
+    width:80px;
+    height:80px;
+  }
+}
+.footer-col h4{
+  margin:0 0 12px;
+  color:#fff;
+  font-size:15px;
+}
+.footer-links{
+  list-style:none;
+  margin:0;
+  padding:0;
+}
+.footer-links li{
+  margin:8px 0;
+}
+.footer-links a{
+  color:rgba(255,255,255,0.8);
+  text-decoration:none;
+  font-size:14px;
+}
+.footer-links a:hover{
+  color:orangered;
+}
+.footer-col p{
+  margin:6px 0;
+  font-size:14px;
+  color:rgba(255,255,255,0.85);
+}
+.social-links{display:flex;gap:18px;align-items:center;justify-content:flex-start}
+.social-link{background:transparent;padding:6px;border-radius:8px;color:#fff;text-decoration:none;font-weight:600;display:inline-flex;align-items:center;gap:8px}
+.social-icon{width:44px;height:44px;display:inline-block;vertical-align:middle;fill:orangered}
+.social-label{color:#fff;display:none}
+.footer-social-inline{justify-content:flex-start}
+
+@media (max-width:920px){
+  .site-footer .footer-grid{gap:32px}
+  .footer-right{grid-template-columns:repeat(2,1fr)}
+}
+@media (max-width:720px){
+  .site-footer .footer-grid{flex-direction:column;gap:24px;align-items:stretch}
+  .footer-left{flex:none;width:100%}
+  .footer-right{grid-template-columns:1fr;width:100%}
+  .footer-branding{gap:12px}
+  .footer-logo{width:50px;height:50px}
+  .footer-brand-name{font-size:16px}
+  .social-links{justify-content:flex-start}
 }

@@ -45,11 +45,77 @@
   } catch (e) {}
   
 
-  // Give button
+  // Give button (navbar)
   const giveBtn = document.getElementById('giveBtn');
   const giveItem = C.nav && C.nav.find(n=>n.label.toLowerCase()==='give');
   giveBtn.textContent = (giveItem && giveItem.label) || 'Give';
-  giveBtn.href = C.give?.link || '#give';
+  giveBtn.href = '#';
+  
+  // Find the give link in the nav
+  const navGiveLink = document.querySelector('.give-link');
+  if (navGiveLink) {
+    navGiveLink.href = '#';
+    
+    // Create accounts container for nav give link
+    let navAccountContainer = document.createElement('div');
+    navAccountContainer.id = 'giveAccountsNav';
+    navAccountContainer.style.display = 'none';
+    navAccountContainer.style.position = 'absolute';
+    navAccountContainer.style.top = '100%';
+    navAccountContainer.style.right = '0'; // Changed from left to right
+    navAccountContainer.style.zIndex = '1000';
+    navAccountContainer.style.maxWidth = '300px'; // Add max width
+    navGiveLink.parentNode.style.position = 'relative';
+    navGiveLink.parentNode.appendChild(navAccountContainer);
+    
+    navGiveLink.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      const accounts = C.give?.accounts;
+      if (accounts && accounts.length) {
+        if (navAccountContainer.style.display === 'none') {
+          navAccountContainer.innerHTML = '';
+          accounts.forEach(acc => {
+            const a = document.createElement('a');
+            a.href = acc.url || '#';
+            a.className = 'account-link';
+            a.textContent = acc.text || acc;
+            a.target = '_blank';
+            a.rel = 'noopener noreferrer';
+            navAccountContainer.appendChild(a);
+          });
+          
+          // Position the dropdown to stay within viewport
+          navAccountContainer.style.display = 'block';
+          const rect = navAccountContainer.getBoundingClientRect();
+          const viewportWidth = window.innerWidth;
+          
+          // If dropdown goes off the right edge, position it to the left
+          if (rect.right > viewportWidth) {
+            navAccountContainer.style.right = 'auto';
+            navAccountContainer.style.left = '0';
+          }
+          
+          // If dropdown goes off the left edge, position it to the right
+          if (rect.left < 0) {
+            navAccountContainer.style.left = 'auto';
+            navAccountContainer.style.right = '0';
+          }
+          
+        } else {
+          navAccountContainer.style.display = 'none';
+        }
+      }
+      return false;
+    });
+    
+    // Close accounts container when clicking outside
+    document.addEventListener('click', function(e) {
+      if (!navGiveLink.contains(e.target) && !navAccountContainer.contains(e.target)) {
+        navAccountContainer.style.display = 'none';
+      }
+    });
+  }
 
   // Hero
   // NOTE: Hero text is now in carousel slides, don't overwrite it
@@ -85,18 +151,66 @@
       }
       return '<span class="accent">' + p1 + '</span>';
     });
-    aboutEl.innerHTML = highlighted;
+    aboutEl.innerHTML = highlighted.replace(/\n\s*\n/g, '<br><br>');
   } catch (e) {
     try { document.getElementById('aboutText').textContent = C.about?.paragraph || ''; } catch (err) {}
   }
 
   // Ministries grid
   const mg = document.getElementById('ministriesGrid');
+  const iconMap = {
+    'Victory Over Darkness': '💫',
+    'Let God Use You': '🙌',
+    'Accelerate': '🚀',
+    'Shift': '👶'
+  };
+  const programSermons = {
+    'victory over darkness': [
+      { label: 'Sermon', url: 'https://drive.google.com/file/d/1IXg0pl4xIkJSSdpIPLuFHZPokm4dBG4f/view?usp=drive_link' }
+    ],
+    'let god use you': [
+      { label: 'Sermon', url: 'https://drive.google.com/file/d/1vaab8ZAVFWn5t_kP4SZTWiWLeBFqqhnf/view?usp=drive_link' }
+    ],
+    'accelerate': [
+      { label: 'Sermon', url: 'https://drive.google.com/file/d/1bJCx8YW5QaTK7rmz3F9nk4-py1ys2P28/view?usp=drive_link' }
+    ],
+    'shift': [
+      { label: 'Shift Day 1', url: 'https://drive.google.com/file/d/1zMUkRMB0qtUe-MYgI02ETIR5-5GWEkw1/view?usp=drive_link' },
+      { label: 'Shift Day 2', url: 'https://drive.google.com/file/d/1AcN5KCPgWp89CoZKHdNfCxivbn_XNgdk/view?usp=drive_link' },
+      { label: 'Shift Day 3', url: 'https://drive.google.com/file/d/1YgMY745loZNJty-yGVOAvOg7DJQt1K_A/view?usp=drive_link' }
+    ]
+  };
   mg.innerHTML = '';
-  (C.ministries || []).forEach(m=>{
+  (C.ministries || []).forEach((m, idx)=>{
     const div = document.createElement('div');
-    div.className = 'card';
-    div.innerHTML = `<h3>${m.title}</h3><p class="muted small">${m.desc}</p>`;
+    div.className = 'card ministry-card';
+    div.setAttribute('data-icon', idx);
+
+    let iconHtml = `<div class="ministry-icon">${iconMap[m.title] || '✨'}</div>`;
+    if (m.title.toLowerCase() === 'victory over darkness') {
+      iconHtml = `<div class="ministry-icon ministry-icon-vod"><img src="images/VOD.png" alt="Victory Over Darkness" class="ministry-image ministry-logo-bold"></div>`;
+    } else if (m.title.toLowerCase() === 'let god use you') {
+      iconHtml = `<div class="ministry-icon ministry-icon-lguy"><img src="images/LGUY.png" alt="Let God Use You" class="ministry-image ministry-logo-bold"></div>`;
+    } else if (m.title.toLowerCase() === 'accelerate') {
+      iconHtml = `<div class="ministry-icon ministry-icon-accelerate"><img src="images/slidea.png" alt="Accelerate" class="ministry-image ministry-logo-bold"></div>`;
+    } else if (m.title.toLowerCase() === 'shift') {
+      iconHtml = `<div class="ministry-icon"><img src="images/slideY.png" alt="Shift" class="ministry-image"></div>`;
+    }
+
+    let sermonHtml = '';
+    const sermonsForProgram = programSermons[m.title.toLowerCase()];
+    if (sermonsForProgram && sermonsForProgram.length) {
+      const sermonLinks = sermonsForProgram.map((s) =>
+        `<a class="btn primary" href="${s.url}" target="_blank" rel="noopener noreferrer" style="display:block; width:100%; margin-bottom:8px; text-align:center;">${s.label}</a>`
+      ).join('');
+      sermonHtml = `<div style="margin-top:14px;">${sermonLinks}</div>`;
+    }
+
+    div.innerHTML = `
+      ${iconHtml}
+      <p class="muted small">${m.desc}</p>
+      ${sermonHtml}
+    `;
     mg.appendChild(div);
   });
 
@@ -106,14 +220,26 @@
   (C.sermons || []).forEach(s=>{
     const art = document.createElement('article');
     art.className = 'card';
+    // store links for this sermon so the selector can show them
+    window.SERMON_LINKS = window.SERMON_LINKS || {};
+    window.SERMON_LINKS[s.id] = { primary: s.url, extra: Array.isArray(s.extra) ? s.extra : [] };
+    const excerptHtml = s.excerpt ? `<p class="muted small">${s.excerpt}</p>` : '';
+    const speakerText = s.speaker && s.speaker.trim() ? `${s.speaker} • ` : '';
+    const imageHtml = s.image ? `<img src="${s.image}" alt="${s.title}" style="width:100%; height:420px; object-fit:cover; object-position:center top; border-radius:8px; margin-bottom:12px; display:block;">` : '';
+    const seriesHtml = s.series && s.series.trim() ? `<div class="sermon-thumb">${s.series}</div>` : '';
+    let playButton = '';
+    if (s.url || (s.extra && s.extra.length)) {
+      playButton = `<button class="btn" onclick="showSermonOptions('${s.id}')">Play</button>`;
+    } else {
+      playButton = `<button class="btn" data-sermon="${s.id}" onclick="openSermon(event)">Play</button>`;
+    }
     art.innerHTML = `
-      <div class="sermon-thumb">${s.series}</div>
+      ${imageHtml}
+      ${seriesHtml}
       <h3>${s.title}</h3>
-      <div class="muted small">${s.speaker} • ${s.date} • ${s.length}</div>
-      <p class="muted small">${s.excerpt}</p>
-      <div style="margin-top:10px">
-        <button class="btn" data-sermon="${s.id}" onclick="openSermon(event)">Play</button>
-        <a class="btn" href="#notes-${s.id}" style="margin-left:8px;background:transparent;border:1px solid rgba(255,255,255,0.04)">Notes</a>
+      ${excerptHtml}
+      <div style="margin-top:10px; display:flex; flex-wrap:wrap; gap:8px; align-items:center;">
+        ${playButton}
       </div>
     `;
     sg.appendChild(art);
@@ -130,9 +256,9 @@
         <div style="font-weight:700">${ev.date}</div>
         <div class="muted small">${ev.time}</div>
       </div>
-      <div>
-        <div style="font-weight:700">${ev.title}</div>
-        <div class="muted small">${ev.desc}</div>
+      <div class="event-content">
+        <div class="event-title">${ev.title}</div>
+        <div class="event-desc">${ev.desc}</div>
       </div>
     `;
     evList.appendChild(div);
@@ -157,13 +283,6 @@
     nextSpanList.forEach(el => el.textContent = nextText);
   } catch (e) { /* ignore */ }
 
-  // Give area
-  document.getElementById('giveHeading').textContent = C.give?.heading || 'Give';
-  document.getElementById('giveText').textContent = C.give?.paragraph || '';
-  const giveLink = document.getElementById('giveLink');
-  giveLink.textContent = C.give?.button || 'Give Now';
-  giveLink.href = C.give?.link || '#';
-
   // Contact info
   const emailEl = document.getElementById('contactEmail');
   const phoneEl = document.getElementById('contactPhone');
@@ -185,12 +304,21 @@
     this.setAttribute('aria-expanded', String(!show));
   });
 
-  // Contact form demo submit
+  // Contact form submit - open WhatsApp
   const contactForm = document.getElementById('contactForm');
   if (contactForm) {
     contactForm.addEventListener('submit', function (e) {
       e.preventDefault();
-      alert('Message sent (demo). Replace with real backend/API.');
+      // gather form values
+      const name = (document.getElementById('name') || {}).value || '';
+      const message = (document.getElementById('message') || {}).value || '';
+      const phone = '2348039939305'; // WhatsApp number without leading plus
+      let text = '';
+      if (name) text += 'Name: ' + name + '%0A';
+      if (message) text += 'Message: ' + message;
+      const url = 'https://wa.me/' + phone + '?text=' + encodeURIComponent(text);
+      // open WhatsApp link in new tab
+      window.open(url, '_blank');
       contactForm.reset();
     });
   }
@@ -200,6 +328,95 @@
     const btn = evt.currentTarget;
     const id = btn.getAttribute('data-sermon');
     alert('Open sermon player for: ' + id + ' (replace this with real embed).');
+  };
+
+  // Toggle notes display
+  window.toggleNotes = function (evt, sermonId) {
+    evt.preventDefault();
+    evt.stopPropagation();
+    const notesEl = document.getElementById('notes-' + sermonId);
+    if (notesEl) {
+      const isHidden = notesEl.style.display === 'none';
+      notesEl.style.display = isHidden ? 'block' : 'none';
+    }
+  };
+
+  // Show a modal to choose which sermon link to play (primary or extras)
+  window.showSermonOptions = function (sermonId) {
+    const data = window.SERMON_LINKS && window.SERMON_LINKS[sermonId];
+    if (!data) return;
+
+    // create modal container if not present
+    let modal = document.getElementById('sermonLinkModal');
+    if (!modal) {
+      modal = document.createElement('div');
+      modal.id = 'sermonLinkModal';
+      modal.style.position = 'fixed';
+      modal.style.left = '0';
+      modal.style.top = '0';
+      modal.style.width = '100%';
+      modal.style.height = '100%';
+      modal.style.display = 'flex';
+      modal.style.alignItems = 'center';
+      modal.style.justifyContent = 'center';
+      modal.style.background = 'rgba(0,0,0,0.5)';
+      modal.style.zIndex = '2000';
+      document.body.appendChild(modal);
+    }
+
+    // build content
+    modal.innerHTML = '';
+    const box = document.createElement('div');
+    box.style.background = '#0f1115';
+    box.style.padding = '20px';
+    box.style.borderRadius = '10px';
+    box.style.minWidth = '280px';
+    box.style.maxWidth = '90%';
+    box.style.boxShadow = '0 8px 24px rgba(0,0,0,0.6)';
+
+    const title = document.createElement('h3');
+    title.textContent = 'Choose link to play';
+    title.style.marginTop = '0';
+    title.style.marginBottom = '12px';
+    box.appendChild(title);
+
+    // primary link
+    if (data.primary) {
+      const a = document.createElement('a');
+      a.className = 'btn primary';
+      a.href = data.primary;
+      a.target = '_blank';
+      a.rel = 'noopener noreferrer';
+      a.textContent = 'Primary';
+      a.style.display = 'block';
+      a.style.marginBottom = '8px';
+      box.appendChild(a);
+    }
+
+    // extra links
+    if (Array.isArray(data.extra) && data.extra.length) {
+      data.extra.forEach(function(e) {
+        const b = document.createElement('a');
+        b.className = 'btn secondary';
+        b.href = e.url;
+        b.target = '_blank';
+        b.rel = 'noopener noreferrer';
+        b.textContent = e.label || 'Link';
+        b.style.display = 'block';
+        b.style.marginBottom = '8px';
+        box.appendChild(b);
+      });
+    }
+
+    const close = document.createElement('button');
+    close.className = 'btn';
+    close.textContent = 'Close';
+    close.style.marginTop = '8px';
+    close.addEventListener('click', function() { modal.style.display = 'none'; });
+    box.appendChild(close);
+
+    modal.appendChild(box);
+    modal.style.display = 'flex';
   };
 
 })();
